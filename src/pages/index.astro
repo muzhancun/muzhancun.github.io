@@ -1,0 +1,415 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+
+import { Quote } from 'astro-pure/advanced'
+import { PostPreview } from 'astro-pure/components/pages'
+import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import { Button, Card, Icon, Label } from 'astro-pure/user'
+import PageLayout from '@/layouts/BaseLayout.astro'
+import ProjectCard from '@/components/home/ProjectCard.astro'
+import Section from '@/components/home/Section.astro'
+import SkillLayout from '@/components/home/SkillLayout.astro'
+import avatar from '@/assets/avatar.png'
+import config from '@/site-config'
+
+// Research interests and skills
+const researchInterests = [
+  'Autonomous Agents',
+  'Multi-Agent Systems', 
+  'Open-Ended Environments',
+  'Reinforcement Learning',
+  'Vision-Language-Action Models',
+  'Embodied AI',
+  'Minecraft AI',
+  'Cognitive Reasoning'
+]
+
+const technicalSkills = [
+  'Python', 'PyTorch', 'JAX', 'C++', 'Reinforcement Learning', 'Computer Vision', 'NLP', 'Minecraft'
+]
+
+// Get all publications and preprints from content collections
+const allPublications = await getCollection('publications', ({ data }) => !data.draft)
+const allPreprints = await getCollection('preprints', ({ data }) => !data.draft)
+
+// Featured publications (specify by filename/id)
+const featuredPublicationIds = ['rocket-1', 'omnijarvis', 'ptgm']
+const featuredPublications = featuredPublicationIds
+  .map(id => allPublications.find(pub => pub.id === id))
+  .filter(Boolean)
+
+// Featured preprints (specify by filename/id)
+const featuredPreprintIds = ['rocket-3', 'minestudio']
+const featuredPreprints = featuredPreprintIds
+  .map(id => allPreprints.find(preprint => preprint.id === id))
+  .filter(Boolean)
+
+const MAX_POSTS = 5
+const allPosts = await getBlogCollection()
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+---
+
+<PageLayout meta={{ title: 'Home' }} highlightColor='#659EB9'>
+  <main class='flex w-full flex-col items-center'>
+    <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
+      <Image
+        src={avatar}
+        alt='profile'
+        class='h-28 w-auto rounded-full border p-1'
+        loading='eager'
+      />
+
+      <div class='flex flex-col items-center gap-y-4'>
+        <h1 class='text-3xl font-bold'>{config.author}</h1>
+        <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
+          <Label title='Beijing, China'>
+            <Icon name='location' class='size-5' slot='icon' />
+          </Label>
+          <Label title='GitHub' as='a' href='https://github.com/muzhancun' target='_blank'>
+            <Icon name='github' class='size-5' slot='icon' />
+          </Label>
+          <Label title='Google Scholar' as='a' href='https://scholar.google.com/citations?user=your-google-scholar-id' target='_blank'>
+          </Label>
+          <Label title='Email' as='a' href='mailto:muzhancun@pku.edu.cn'>
+            <Icon name='email' class='size-5' slot='icon' />
+          </Label>
+        </div>
+      </div>
+    </section>
+
+    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
+      <Section title='About'>
+        <p class='text-muted-foreground mt-1'>Ph.D. Candidate • AI Researcher • Autonomous Agents</p>
+        <div class='flex flex-col gap-2 leading-6 text-muted-foreground'>
+          <p>
+ I am Zhancun Mu (牟湛存), currently a Ph.D. candidate at the Institute for Artificial Intelligence under the supervision of Professor Yitao Liang.
+    I graduated from <a href="https://tongclass.ac.cn/" class="text-primary hover:underline">Tong Class</a>, Yuanpei College, Peking University in 2025.
+          </p>
+          <p>
+            My research focuses on developing autonomous agents capable of operating in open-ended, dynamic environments such as Minecraft. 
+            I concentrate on two key elements: designing robust planning systems that enable agents to make complex decisions over long time horizons, 
+            and creating intuitive controllers that allow agents to seamlessly interact with their environments.
+          </p>
+          <p>
+            I am keenly interested in multi-agent systems, cognitive reasoning, and developing computational models that capture aspects of human-like intelligence. 
+            My ultimate vision is to develop intelligent agents that can autonomously explore, understand, and shape open-ended environments.
+          </p>
+        </div>
+        <Button title='More about me' class='w-fit self-end' href='/about' style='ahead' />
+      </Section>
+
+      <!-- Featured Preprints Section -->
+      <Section class='preprints-section'>
+        <div slot="title">
+          Featured<br />Preprints
+        </div>
+        <div class='space-y-4'>
+          {featuredPreprints.map((pub) => (
+            <a 
+              href={`/preprints/${pub.id}`}
+              class="group block"
+            >
+              <div class="relative rounded-lg border bg-card p-5 transition-all hover:shadow-md">
+                <div class="flex gap-6">
+                  <!-- Teaser Image -->
+                  <div class="flex-shrink-0 w-48">
+                    <img 
+                      src={pub.data.teaser || '/images/default-paper.jpg'} 
+                      alt={`${pub.data.title} teaser`}
+                      class="w-full h-32 rounded-md object-cover bg-muted"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  <!-- Publication Details -->
+                  <div class="flex-1 flex flex-col space-y-3">
+                    <!-- Title -->
+                    <h3 class="text-base font-semibold leading-tight text-foreground group-hover:text-primary line-clamp-2">
+                      {pub.data.title}
+                    </h3>
+                    
+                    <!-- Authors -->
+                    <p class="text-xs text-muted-foreground leading-relaxed">
+                      {pub.data.authors.map((author, index) => {
+                        const isEqualContrib = author.includes('*');
+                        const cleanAuthor = author.replace('*', '');
+                        const isMe = cleanAuthor === 'Zhancun Mu';
+                        return (
+                          <span class={isMe ? 'font-medium text-foreground' : ''}>
+                            {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
+                          </span>
+                        );
+                      })}
+                      {pub.data.authors.some(author => author.includes('*')) && (
+                        <span class="inline-block text-xs text-amber-700 bg-amber-50/70 px-2 py-0.5 rounded-md mt-1 italic font-light border border-amber-100 equal-contribution">* Equal contribution</span>
+                      )}
+                    </p>
+                    
+                    <!-- Venue -->
+                    <p class="text-xs font-medium text-muted-foreground">
+                      {pub.data.venue} • {pub.data.year}
+                    </p>
+                    
+                    <!-- Links Container -->
+                    <div>
+                      {pub.data.links?.paper && (
+                        <a 
+                          href={pub.data.links.paper}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Paper
+                        </a>
+                      )}
+                      {pub.data.links?.code && (
+                        <a 
+                          href={pub.data.links.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Code
+                        </a>
+                      )}
+                      {pub.data.links?.project && (
+                        <a 
+                          href={pub.data.links.project}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-accent text-accent-foreground hover:bg-accent/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Project
+                        </a>
+                      )}
+                    </div>
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="mt-6">
+          <Button title='All preprints' class='w-fit self-end' href='/preprints' style='ahead' />
+        </div>
+      </Section>
+
+      <!-- Featured Publications Section -->
+      <Section class='preprints-section'>
+        <div slot="title">
+          Featured<br />Publications
+        </div>
+        <div class='space-y-4'>
+          {featuredPublications.map((pub) => (
+            <a 
+              href={`/publications/${pub.id}`}
+              class="group block"
+            >
+              <div class="relative rounded-lg border bg-card p-5 transition-all hover:shadow-md">
+                <div class="flex gap-6">
+                  <!-- Teaser Image -->
+                  <div class="flex-shrink-0 w-48">
+                    <img 
+                      src={pub.data.teaser || '/images/default-paper.jpg'} 
+                      alt={`${pub.data.title} teaser`}
+                      class="w-full h-32 rounded-md object-cover bg-muted"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  <!-- Publication Details -->
+                  <div class="flex-1 flex flex-col space-y-3">
+                    <!-- Title -->
+                    <h3 class="text-base font-semibold leading-tight text-foreground group-hover:text-primary line-clamp-2">
+                      {pub.data.title}
+                    </h3>
+                    
+                    <!-- Authors -->
+                    <p class="text-xs text-muted-foreground leading-relaxed">
+                      {pub.data.authors.map((author, index) => {
+                        const isEqualContrib = author.includes('*');
+                        const cleanAuthor = author.replace('*', '');
+                        const isMe = cleanAuthor === 'Zhancun Mu';
+                        return (
+                          <span class={isMe ? 'font-medium text-foreground' : ''}>
+                            {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
+                          </span>
+                        );
+                      })}
+                      {pub.data.authors.some(author => author.includes('*')) && (
+                        <span class="inline-block text-xs text-amber-700 bg-amber-50/70 px-2 py-0.5 rounded-md mt-1 italic font-light border border-amber-100 equal-contribution">* Equal contribution</span>
+                      )}
+                    </p>
+                    
+                    <!-- Venue -->
+                    <p class="text-xs font-medium text-primary">
+                      {pub.data.venue} • {pub.data.year}
+                    </p>
+                    
+                    <!-- Links Container -->
+                    <div>
+                      {pub.data.links?.paper && (
+                        <a 
+                          href={pub.data.links.paper}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Paper
+                        </a>
+                      )}
+                      {pub.data.links?.code && (
+                        <a 
+                          href={pub.data.links.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Code
+                        </a>
+                      )}
+                      {pub.data.links?.project && (
+                        <a 
+                          href={pub.data.links.project}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-link-button
+                          class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md bg-accent text-accent-foreground hover:bg-accent/90 transition-colors mr-2 mb-1"
+                          onclick="event.stopPropagation()"
+                        >
+                          Project
+                        </a>
+                      )}
+                    </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="mt-6">
+          <Button title='All publications' class='w-fit self-end' href='/publications' style='ahead' />
+        </div>
+      </Section>
+
+      {
+        /* <Section title='Experience'>
+      <Card
+        heading='Lorem Ipsum'
+        subheading='Sit amet consectetur'
+        date='Dec 2022 - Nov 2023'
+        imagePath='/src/assets/about-astro.png'
+        altText='Lorem, ipsum dolor sit'
+        imageClass='h-12 w-auto md:-start-16'
+      >
+        <ul class='ms-4 list-disc text-muted-foreground'>
+          <li>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
+            molestiae laboriosam pariatur!
+
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
+          </li>
+        </ul>
+      </Card>
+      <Card
+        heading='Lorem Ipsum'
+        subheading='Sit amet consectetur'
+        date='Dec 2022 - Nov 2023'
+        imagePath='/src/assets/about-astro.png'
+        altText='Lorem, ipsum dolor sit'
+        imageClass='h-12 w-auto md:-start-16'
+      />
+    </Section> */
+      }
+      <Section title='Education'>
+        <Card
+          as='a'
+          heading='Peking University'
+          subheading='Ph.D. in Artificial Intelligence (Incoming)'
+          date='2025 - Present'
+          href='https://www.pku.edu.cn/'
+        >
+          <img
+            class='absolute end-0 z-0 m-0 -my-3 h-full w-1/2 object-cover opacity-40'
+            src='/images/PKU.svg'
+          />
+        </Card>
+        <Card
+          as='a'
+          heading='Peking University'
+          subheading='Undergraduate - Tong Class, Yuanpei College'
+          date='2021 - 2025'
+          href='https://tongclass.ac.cn/'
+        >
+          <img
+            class='absolute end-0 z-0 m-0 -my-3 h-full w-1/2 object-cover opacity-40'
+            src='/images/PKU.svg'
+          />
+        </Card>
+      </Section>
+
+    </div>
+    <Quote class='mt-12' />
+  </main>
+</PageLayout>
+
+<style>
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .preprints-section h2::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+  }
+  
+  .preprints-section h2 {
+    line-height: 1.2;
+  }
+
+  /* Equal contribution styling for dark mode */
+  .dark .equal-contribution {
+    background-color: rgb(67 56 202 / 0.1) !important;
+    color: rgb(129 140 248) !important;
+    border-color: rgb(67 56 202 / 0.3) !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 阻止链接按钮的点击事件冒泡
+    const linkButtons = document.querySelectorAll('[data-link-button]');
+    linkButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  });
+</script>

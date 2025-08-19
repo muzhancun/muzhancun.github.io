@@ -1,0 +1,142 @@
+---
+import config from 'virtual:config'
+
+import { Comment } from 'astro-pure/advanced'
+import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import Substats from '@/components/about/Substats.astro'
+import ToolSection from '@/components/about/ToolSection.astro'
+import Signature from '@/components/pages/Signature.astro'
+import zotero from '@/assets/tools/zotero.png'
+
+const headings = [
+  {
+    depth: 2,
+    slug: 'general-talk',
+    text: 'General Talk'
+  },
+  {
+    depth: 2,
+    slug: 'social-networks',
+    text: 'Social Networks'
+  },
+
+  {
+    depth: 2,
+    slug: 'education',
+    text: 'Education'
+  },
+  {
+    depth: 2,
+    slug: 'experience',
+    text: 'Experience'
+  },
+]
+---
+
+<PageLayout title='About' {headings} info='/about'>
+  <h2 id='general-talk' class='invisible m-0 h-0'>General Talk</h2>
+  <p class='text-muted-foreground'>Ph.D. Candidate • AI Researcher • Autonomous Agents</p>
+  <p>
+    I am Zhancun Mu (牟湛存), currently a Ph.D. candidate at the Institute for Artificial Intelligence under the supervision of Professor Yitao Liang.
+    I graduated from <a href="https://tongclass.ac.cn/" class="text-primary hover:underline">Tong Class</a>, Yuanpei College, Peking University in 2025.
+  </p>
+  <p>
+    My research is focused on developing autonomous agents capable of operating in open-ended, dynamic environments such as Minecraft. 
+    To achieve this goal, I concentrate on two key elements: designing robust planning systems that enable agents to make complex 
+    decisions over long time horizons, and creating intuitive controllers that allow agents to seamlessly interact with their environments.
+  </p>
+  <p>
+    I am keenly interested in multi-agent systems, exploring how autonomous agents can coordinate their behaviors to accomplish shared objectives. 
+    I am also drawn to cognitive reasoning and developing computational models that capture aspects of human-like intelligence. 
+    My ultimate vision is to develop intelligent agents that can autonomously explore, understand, and shape the open-ended environments 
+    they inhabit in pursuit of complex, self-motivated goals.
+  </p>
+  <div class='flex w-fit gap-x-2'>
+    <img
+      alt='CodeTime Badge'
+      src='https://wakatime.com/badge/user/dd6fe135-b36c-4a86-a363-672bc56286cb.svg'
+      class='rounded-md border'
+    />
+  </div>
+
+  {/* social-networks */}
+  <h2 id='social-networks'>Social Networks</h2>
+  <p>You can find me at: </p>
+  <Substats
+    stats={[
+      {
+        platform: 'GitHub',
+        icon: 'github',
+        link: 'https://github.com/muzhancun',
+        text: 'followers',
+        api: 'github/muzhancun'
+      },
+      {
+        platform: 'Zhihu',
+        icon: 'zhihu',
+        color: '#0084ff',
+        link: 'https://www.zhihu.com/people/wu-jing-zha-zha',
+        text: 'followers',
+        count: 39
+      },
+      {
+        platform: 'Bilibili',
+        icon: 'bilibili',
+        color: '#fe7398',
+        link: 'https://space.bilibili.com/512661064',
+        text: 'followers',
+        count: 83
+      },
+    ]}
+  />
+
+  <h2 id='education'>Education</h2>
+  <Timeline
+    events={[
+      {
+        date: '2021-09-01',
+        content: '<a href="https://yuanpei.pku.edu.cn/"target="_blank">Yuanpei College, Peking University</a>'
+      },
+      {
+        date: '2018-09-01',
+        content: '<a href="#" target="_blank">Rizhao No.1 Middle School of Shandong</a>'
+      }
+    ]}
+  />
+
+  <h2 id='experience'>Experience</h2>
+  <Timeline
+    events={[
+      {
+        date: '2024-2025',
+        content:
+          '<a href="https://github.com/lhydave/AIM-textbook"target="_blank">Teaching Assistant of AI Math, PKU Spring</a>'
+      }
+    ]}
+  />
+
+  {/* about-blog */}
+  <h2 id='about-blog'>About Blog</h2>
+  <p>This site is powered by:</p>
+  <ul>
+    <li>
+      Framework and Theme: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'>Astro Theme Pure</a
+      >
+    </li>
+    <li>Comment System: <a href='https://waline.js.org' target='_blank'>Waline</a></li>
+    <li>
+      Access Count: <a href='https://waline.js.org/' target='_blank'>Waline</a> + <a
+        href='https://umami.is/'
+        target='_blank'>Umami</a
+      >
+    </li>
+    <li>
+      Fan Count: <a href='https://github.com/spencerwooo/substats' target='_blank'>Substats</a>
+    </li>
+  </ul>
+  {config.signature && <Signature />}
+  <Comment slot='bottom' />
+</PageLayout>

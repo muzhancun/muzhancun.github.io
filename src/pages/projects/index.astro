@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets'
+
+import { Button, Collapse, Icon } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import ProjectSection from '@/components/projects/ProjectSection.astro'
+import Sponsors from '@/components/projects/Sponsors.astro'
+import Sponsorship from '@/components/projects/Sponsorship.astro'
+import alipay from '@/assets/alipay-qrcode.jpg'
+import KeyIcon from '@/assets/icons/key.svg'
+import wechat from '@/assets/wechat-qrcode.jpg'
+import config from '@/site-config'
+
+const headings = [
+  { depth: 2, slug: 'programs', text: 'Programs' },
+  { depth: 2, slug: 'papers', text: 'Papers' },
+]
+---
+
+<PageLayout title='Projects' {headings} info={{ slug: '/projects', hideComment: true }}>
+
+  <picture>
+    <img src="https://github.com/muzhancun/muzhancun/raw/main/github-metrics.svg" alt="Metrics">
+  </picture>
+
+  <h2 id='programs'>Programs</h2>
+  <ProjectSection
+    project={[
+      {
+        name: 'MineStudio',
+        description: 'A Streamlined Package for Minecraft AI Agent Development',
+        links: [
+          { type: 'github', href: 'https://github.com/CraftJarvis/MineStudio' },
+          { type: 'site', href: 'https://craftjarvis.github.io/MineStudio/index.html' },
+          { type: 'doc', href: 'https://craftjarvis.github.io/MineStudio/index.html' }
+        ]
+      }
+    ]}
+  />
+
+  <h2 id='papers'>Papers</h2>
+  <ProjectSection
+    project={[
+      {
+        name: 'ROCKET-3',
+        description: 'Scalable Multi-Task Reinforcement Learning for Generalizable Spatial Intelligence in Visuomotor Agents',
+        links: [
+          { type: 'github', href: 'https://github.com/CraftJarvis/ROCKET-3' },
+          { type: 'site', href: 'https://craftjarvis.github.io/ROCKET-3/' },
+          { type: 'doc', href: 'https://arxiv.org/abs/2507.23698' }
+        ]
+      },
+      {
+        name: 'ROCKET-2',
+        description: 'Steering Visuomotor Policy via Cross-View Goal Alignment',
+        links: [
+          { type: 'github', href: 'https://github.com/CraftJarvis/ROCKET-2' },
+          { type: 'site', href: 'https://craftjarvis.github.io/ROCKET-2/' },
+          { type: 'doc', href: 'https://arxiv.org/pdf/2503.02505' }
+        ]
+      },
+      {
+        name: 'ROCKET-1',
+        description: 'Master Open-World Interaction with Visual-Temporal Context Prompting',
+        links: [
+          { type: 'github', href: 'https://github.com/CraftJarvis/ROCKET-1' },
+          { type: 'site', href: 'https://craftjarvis.github.io/ROCKET-1/' },
+          { type: 'doc', href: 'https://arxiv.org/abs/2410.17856' }
+        ]
+      },
+      {
+        name: 'PTGM-Kitchen',
+        description: 'Pre-Training Goal-based Models for Sample-Efficient Reinforcement Learning',
+        links: [
+          { type: 'github', href: 'https://github.com/muzhancun/muzhancun/PTGM-Kitchen' },
+          { type: 'site', href: 'https://sites.google.com/view/ptgm-iclr/' },
+          { type: 'doc', href: 'https://openreview.net/forum?id=o2IEmeLL9r' }
+        ]
+      },
+      {
+        name: 'GlobalTomo',
+        description: 'The first global synthetic dataset for physics-ML seismic wavefield modeling and full-waveform inversion',
+        links: [
+          { type: 'github', href: 'https://github.com/lishiqianhugh/GlobalTomo'},
+          { type: 'site', href: 'https://global-tomo.github.io/' },
+          { type: 'doc', href: 'https://arxiv.org/pdf/2406.18202v2' }
+        ]
+      }
+    ]}
+  />
+
+</PageLayout>
+
+<script
+  is:inline
+  type='module'
+  data-astro-rerun
+  define:vars={{ npmCDN: config.npmCDN, walineServer: config.integ.waline.server }}
+>
+  const loadPageviewCount = async () => {
+    const pageview = await import(`${npmCDN}/@waline/client@v3/dist/pageview.js`)
+    pageview.pageviewCount({
+      serverURL: walineServer,
+      path: window.location.pathname
+    })
+  }
+
+  await loadPageviewCount()
+</script>
+
+<style>
+  .sponsorship-card {
+    & .sponsorship-card-img {
+      opacity: 0.3;
+      --un-blur: blur(4px);
+      filter: var(--un-blur);
+    }
+
+    &:hover {
+      & .sponsorship-card-icon {
+        opacity: 0;
+      }
+      & .sponsorship-card-img {
+        opacity: 1;
+        --un-blur: blur(0);
+      }
+    }
+  }
+</style>

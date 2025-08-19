@@ -1,0 +1,156 @@
+---
+import { render, type CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import PageLayout from '@/layouts/BaseLayout.astro'
+import { Comment } from 'astro-pure/advanced'
+export const prerender = true
+
+export async function getStaticPaths() {
+  const preprints = await getCollection('preprints', ({ data }) => {
+    return !data.draft
+  })
+  
+  return preprints.map((preprint) => ({
+    params: { id: preprint.id },
+    props: { preprint }
+  }))
+}
+
+type Props = {
+  preprint: CollectionEntry<'preprints'>
+}
+
+const { preprint } = Astro.props
+const { Content, headings } = await render(preprint)
+
+const meta = {
+  description: preprint.data.abstract,
+  title: preprint.data.title
+}
+---
+
+<PageLayout meta={meta}>
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Paper Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-4">{preprint.data.title}</h1>
+      
+      <!-- Authors -->
+      <div class="mb-4">
+        <p class="text-lg text-muted-foreground">
+          {preprint.data.authors.map((author, index) => {
+            const isEqualContrib = author.includes('*');
+            const cleanAuthor = author.replace('*', '');
+            const isMe = cleanAuthor === 'Zhancun Mu';
+            return (
+              <span class={isMe ? 'font-medium text-foreground' : ''}>
+                {cleanAuthor}{isEqualContrib ? '*' : ''}{index < preprint.data.authors.length - 1 ? ', ' : ''}
+              </span>
+            );
+          })}
+        </p>
+        {preprint.data.authors.some(author => author.includes('*')) && (
+          <p class="text-sm text-amber-700 bg-amber-50/70 px-2 py-1 rounded-md mt-2 italic inline-block border border-amber-100">
+            * Equal contribution
+          </p>
+        )}
+      </div>
+      
+      <!-- Venue and Year -->
+      <p class="text-lg font-medium text-muted-foreground mb-4">
+        {preprint.data.venue} • {preprint.data.year}
+      </p>
+      
+      <!-- Links -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        {preprint.data.links?.paper && (
+          <a 
+            href={preprint.data.links.paper}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            📄 Paper
+          </a>
+        )}
+        {preprint.data.links?.code && (
+          <a 
+            href={preprint.data.links.code}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors"
+          >
+            💻 Code
+          </a>
+        )}
+        {preprint.data.links?.project && (
+          <a 
+            href={preprint.data.links.project}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
+          >
+            🌐 Project
+          </a>
+        )}
+        {preprint.data.links?.slides && (
+          <a 
+            href={preprint.data.links.slides}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-muted text-muted-foreground hover:bg-muted/90 transition-colors"
+          >
+            📊 Slides
+          </a>
+        )}
+        {preprint.data.links?.video && (
+          <a 
+            href={preprint.data.links.video}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-muted text-muted-foreground hover:bg-muted/90 transition-colors"
+          >
+            🎥 Video
+          </a>
+        )}
+      </div>
+      
+      <!-- Teaser Image -->
+      {preprint.data.teaser && (
+        <div class="mb-8">
+          <img 
+            src={preprint.data.teaser} 
+            alt={`${preprint.data.title} teaser`}
+            class="w-full max-w-2xl mx-auto rounded-lg shadow-lg"
+            loading="lazy"
+          />
+        </div>
+      )}
+    </div>
+    
+    <!-- Paper Content -->
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+    
+    <!-- Back Navigation -->
+    <div class="mt-12 pt-8 border-t">
+      <a 
+        href="/preprints" 
+        class="inline-flex items-center gap-2 text-primary hover:underline"
+      >
+        ← Back to Preprints
+      </a>
+    </div>
+    <Comment />
+  </div>
+</PageLayout>
+
+<style>
+  /* Equal contribution styling for dark mode */
+  .dark .equal-contribution {
+    background-color: rgb(67 56 202 / 0.1) !important;
+    color: rgb(129 140 248) !important;
+    border-color: rgb(67 56 202 / 0.3) !important;
+  }
+</style>
