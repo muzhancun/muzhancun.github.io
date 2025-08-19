@@ -37,13 +37,13 @@ const allPreprints = await getCollection('preprints', ({ data }) => !data.draft)
 const featuredPublicationIds = ['rocket-1', 'omnijarvis', 'ptgm']
 const featuredPublications = featuredPublicationIds
   .map(id => allPublications.find(pub => pub.id === id))
-  .filter(Boolean)
+  .filter((pub): pub is NonNullable<typeof pub> => Boolean(pub))
 
 // Featured preprints (specify by filename/id)
 const featuredPreprintIds = ['rocket-3', 'minestudio']
 const featuredPreprints = featuredPreprintIds
   .map(id => allPreprints.find(preprint => preprint.id === id))
-  .filter(Boolean)
+  .filter((preprint): preprint is NonNullable<typeof preprint> => Boolean(preprint))
 
 const MAX_POSTS = 5
 const allPosts = await getBlogCollection()
@@ -190,8 +190,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
                         </a>
                       )}
                     </div>
-                    
-                    </div>
                   </div>
                 </div>
               </div>
@@ -293,8 +291,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
                           Project
                         </a>
                       )}
-                    </div>
-
                     </div>
                   </div>
                 </div>

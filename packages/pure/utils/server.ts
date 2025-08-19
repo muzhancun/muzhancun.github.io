@@ -15,7 +15,8 @@ export async function getBlogCollection(contentType: CollectionKey = 'blog') {
 function getYearFromCollection<T extends CollectionKey>(
   collection: CollectionEntry<T>
 ): number | undefined {
-  const dateStr = collection.data.updatedDate ?? collection.data.publishDate
+  const data = collection.data as any
+  const dateStr = data.updatedDate ?? data.publishDate
   return dateStr ? new Date(dateStr).getFullYear() : undefined
 }
 export function groupCollectionsByYear<T extends CollectionKey>(
@@ -39,8 +40,19 @@ export function groupCollectionsByYear<T extends CollectionKey>(
 
 export function sortMDByDate(collections: Collections): Collections {
   return collections.sort((a, b) => {
-    const aDate = new Date(a.data.updatedDate ?? a.data.publishDate ?? 0).valueOf()
-    const bDate = new Date(b.data.updatedDate ?? b.data.publishDate ?? 0).valueOf()
+    // Handle different collection types with different date fields
+    const getDate = (item: any) => {
+      const data = item.data
+      // For blog/docs collections that have updatedDate
+      if ('updatedDate' in data) {
+        return new Date(data.updatedDate ?? data.publishDate ?? 0).valueOf()
+      }
+      // For publications/preprints that only have publishDate
+      return new Date(data.publishDate ?? 0).valueOf()
+    }
+    
+    const aDate = getDate(a)
+    const bDate = getDate(b)
     return bDate - aDate
   })
 }
