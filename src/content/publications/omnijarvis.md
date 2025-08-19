@@ -10,7 +10,7 @@ teaser: "/images/OmniJARVIS.png"
 links:
   paper: "https://omnijarvis.github.io/static/pdf/OmniJARViS.pdf"
   project: "https://omnijarvis.github.io/"
-tags: ["NeurIPS", "Vision-Language", "Instruction Following", "Multimodal"]
+tags: ["NeurIPS", "VLA", "Agent"]
 ---
 
 ## Abstract

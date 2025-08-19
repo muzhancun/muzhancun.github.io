@@ -11,7 +11,7 @@ links:
   paper: "https://openreview.net/forum?id=o2IEmeLL9r"
   code: "https://github.com/PKU-RL/PTGM"
   project: "https://sites.google.com/view/ptgm-iclr/"
-tags: ["ICLR", "Reinforcement Learning", "Pre-training", "Sample Efficiency"]
+tags: ["ICLR", "Reinforcement Learning", "Pre-training", "Goal Conditioned Policy"]
 ---
 
 ## Abstract

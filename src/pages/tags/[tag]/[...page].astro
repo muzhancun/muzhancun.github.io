@@ -5,6 +5,7 @@ import type { CollectionEntry } from 'astro:content'
 import { Paginator, PostPreview } from 'astro-pure/components/pages'
 import { getBlogCollection, getUniqueTags, sortMDByDate } from 'astro-pure/server'
 import { Button } from 'astro-pure/user'
+import { getCollection } from 'astro:content'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import config from '@/site-config'
 
@@ -12,12 +13,24 @@ export const prerender = true
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const allPosts = await getBlogCollection()
-  const allPostsByDate = sortMDByDate(allPosts)
-  const uniqueTags = getUniqueTags(allPostsByDate)
+  const allPreprints = await getCollection('preprints', ({ data }) => !data.draft)
+  const allPublications = await getCollection('publications', ({ data }) => !data.draft)
+  
+  // Combine all content
+  const allContent = [...allPosts, ...allPreprints, ...allPublications]
+  
+  // Sort by publish date
+  const allContentByDate = allContent.sort((a, b) => {
+    const aDate = a.data.publishDate ? new Date(a.data.publishDate).getTime() : 0
+    const bDate = b.data.publishDate ? new Date(b.data.publishDate).getTime() : 0
+    return bDate - aDate
+  })
+  
+  const uniqueTags = getUniqueTags(allContentByDate)
 
   return uniqueTags.flatMap((tag) => {
-    const filterPosts = allPostsByDate.filter((post) => post.data.tags.includes(tag))
-    return paginate(filterPosts, {
+    const filterContent = allContentByDate.filter((content) => content.data.tags.includes(tag))
+    return paginate(filterContent, {
       pageSize: config.content.blogPageSize,
       params: { tag }
     })
@@ -25,14 +38,14 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 }
 
 interface Props {
-  page: Page<CollectionEntry<'blog'>>
+  page: Page<any>
 }
 
 const { page } = Astro.props
 const { tag } = Astro.params
 
 const meta = {
-  description: `View all posts with the tag - ${tag}`,
+  description: `View all content with the tag - ${tag}`,
   title: `Tag: ${tag}`
 }
 
@@ -53,7 +66,7 @@ const paginationProps = {
 ---
 
 <PageLayout {meta}>
-  <Button title='Back' href='/blog' style='back' />
+  <Button title='Back' href='/tags' style='back' />
   <main class='mt-6 lg:mt-10'>
     <div id='content-header' class='animate'>
       <h1 class='mb-6 flex items-end gap-x-2 text-3xl font-medium'>
@@ -62,9 +75,48 @@ const paginationProps = {
       </h1>
     </div>
 
-    <section id='content' class='animate' aria-label='Blog post list'>
+    <section id='content' class='animate' aria-label='Content list'>
       <ul class='flex flex-col gap-y-3 text-start'>
-        {page.data.map((post) => <PostPreview as='h2' {post} detailed />)}
+        {page.data.map((content) => {
+          if (content.collection === 'blog') {
+            return <PostPreview as='h2' post={content} detailed />
+          } else if (content.collection === 'preprints' || content.collection === 'publications') {
+            return (
+              <li class="border rounded-lg p-4 hover:shadow-md transition-all">
+                <a href={`/${content.collection}/${content.id}`} class="block">
+                  <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-lg text-foreground hover:text-primary line-clamp-2 mb-2">
+                        {content.data.title}
+                      </h3>
+                      <p class="text-sm text-muted-foreground mb-2">
+                        {content.data.authors.map((author: string, index: number) => {
+                          const isMe = author.replace('*', '') === 'Zhancun Mu';
+                          return (
+                            <span class={isMe ? 'font-medium text-foreground' : ''}>
+                              {author}{index < content.data.authors.length - 1 ? ', ' : ''}
+                            </span>
+                          );
+                        })}
+                      </p>
+                      <p class="text-xs text-muted-foreground">
+                        {content.data.venue} • {content.data.year}
+                      </p>
+                    </div>
+                    <span class={`text-xs px-2 py-1 rounded-full font-medium ml-4 ${
+                      content.collection === 'preprints' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300' :
+                      content.data.type === 'conference' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300' :
+                      content.data.type === 'journal' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                      'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300'
+                    }`}>
+                      {content.collection === 'preprints' ? 'preprint' : content.data.type}
+                    </span>
+                  </div>
+                </a>
+              </li>
+            )
+          }
+        })}
       </ul>
       <Paginator {...paginationProps} />
     </section>

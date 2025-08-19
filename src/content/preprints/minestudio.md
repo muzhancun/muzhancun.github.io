@@ -11,7 +11,7 @@ links:
   paper: "https://arxiv.org/abs/2412.18293"
   code: "https://github.com/CraftJarvis/MineStudio"
   project: "https://craftjarvis.github.io/MineStudio/"
-tags: ["AI", "Minecraft", "Development Tools", "Package"]
+tags: ["Minecraft", "Agent", "Reinforcement Learning"]
 ---
 
 ## Abstract

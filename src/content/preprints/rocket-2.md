@@ -11,7 +11,7 @@ links:
   paper: "https://arxiv.org/abs/2503.02505"
   code: "https://github.com/CraftJarvis/ROCKET-2"
   project: "https://craftjarvis.github.io/ROCKET-2"
-tags: ["AI", "Minecraft", "Visuomotor", "Robotics"]
+tags: ["Minecraft", "Agent", "Goal Conditioned Policy", "Pre-training"]
 ---
 
 ## Abstract

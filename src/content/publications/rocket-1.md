@@ -11,7 +11,7 @@ links:
   paper: "https://arxiv.org/pdf/2410.17856"
   code: "https://github.com/CraftJarvis/ROCKET-1"
   project: "https://craftjarvis.github.io/ROCKET-1"
-tags: ["Computer Vision", "Minecraft", "Reinforcement Learning", "CVPR"]
+  tags: ["CVPR", "Minecraft", "Agent", "Goal Conditioned Policy", "Pre-training"]
 ---
 
 ## Abstract

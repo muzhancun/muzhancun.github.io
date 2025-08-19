@@ -9,7 +9,7 @@ abstract: "We present a novel contextual combinatorial bandit approach for autom
 teaser: "/images/neg.png"
 links:
   paper: "https://arxiv.org/pdf/2407.00567"
-tags: ["ICML", "Multi-agent Systems", "Bandit Algorithms", "Negotiation"]
+tags: ["ICML", "Multi-agent Systems", "Negotiation"]
 ---
 
 ## Abstract

@@ -2,13 +2,19 @@
 import { getBlogCollection, getUniqueTagsWithCount } from 'astro-pure/server'
 import { Button } from 'astro-pure/user'
 import { cn } from 'astro-pure/utils'
+import { getCollection } from 'astro:content'
 import PageLayout from '@/layouts/BaseLayout.astro'
 
 const allPosts = await getBlogCollection()
-const allTags = getUniqueTagsWithCount(allPosts)
+const allPreprints = await getCollection('preprints', ({ data }) => !data.draft)
+const allPublications = await getCollection('publications', ({ data }) => !data.draft)
+
+// Combine all collections for tags
+const allContent = [...allPosts, ...allPreprints, ...allPublications]
+const allTags = getUniqueTagsWithCount(allContent)
 
 const meta = {
-  description: "A list of all the topics I've written about in my posts",
+  description: "A list of all the topics I've written about in my posts, preprints, and publications",
   title: 'All Tags'
 }
 ---
