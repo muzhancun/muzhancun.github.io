@@ -1,9 +1,9 @@
 ---
 title: "GlobalTomo: A global dataset for physics-ML seismic wavefield modeling and full-waveform inversion"
 authors: ["Shiqian Li", "Zhi Li", "Zhancun Mu", "Shiji Xin", "Zhixiang Dai", "Kuangdai Leng", "Ruihua Zhang", "Xiaodong Song", "Yixin Zhu"]
-venue: "arXiv preprint"
-year: 2024
-publishDate: 2024-06-18
+venue: "NeurIPS 2025 Datasets and Benchmarks Track"
+year: 2025
+publishDate: 2025-09-18
 type: preprint
 abstract: "GlobalTomo provides a global dataset for physics-ML seismic wavefield modeling and full-waveform inversion."
 teaser: "/images/globaltomo.jpg"
@@ -70,4 +70,3 @@ The dataset is publicly available through our project website and includes:
 - Comprehensive documentation
 - Example usage scripts
 - Benchmark tasks for ML evaluation
-- Community support forums
