@@ -4,7 +4,7 @@ authors: ["Shiqian Li", "Zhi Li", "Zhancun Mu", "Shiji Xin", "Zhixiang Dai", "Ku
 venue: "NeurIPS 2025 Datasets and Benchmarks Track"
 year: 2025
 publishDate: 2025-09-18
-type: preprint
+type: conference
 abstract: "GlobalTomo provides a global dataset for physics-ML seismic wavefield modeling and full-waveform inversion."
 teaser: "/images/globaltomo.jpg"
 links:
