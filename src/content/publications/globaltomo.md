@@ -11,7 +11,7 @@ links:
   paper: "https://arxiv.org/abs/2406.18202"
   code: "https://github.com/lishiqianhugh/GlobalTomo"
   project: "https://global-tomo.github.io/"
-tags: ["Dataset", "AI4Science"]
+tags: ["Dataset", "AI4Science", "NeurIPS"]
 ---
 
 ## Abstract
