@@ -7,6 +7,7 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // Integrations
 import AstroPureIntegration from 'astro-pure'
 import { defineConfig } from 'astro/config'
+import rehypeCitation from 'rehype-citation'
 import rehypeKatex from 'rehype-katex'
 import { remarkAlert } from 'remark-github-blockquote-alert'
 import remarkMath from 'remark-math'
@@ -91,7 +92,14 @@ export default defineConfig({
           properties: { className: ['anchor'] },
           content: { type: 'text', value: '#' }
         }
-      ]
+      ],
+      [
+        rehypeCitation,
+        {
+          bibliography: './public/references.bib',
+          linkCitations: true
+        }
+      ],
     ],
     // https://docs.astro.build/en/guides/syntax-highlighting/
     shikiConfig: {

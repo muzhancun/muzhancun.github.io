@@ -5,7 +5,7 @@ venue: "arXiv preprint"
 year: 2024
 publishDate: 2024-12-18
 type: preprint
-abstract: "MineStudio is a streamlined package for Minecraft AI agent development, released on GitHub and PyPI."
+abstract: "MineStudio is a streamlined package for Minecraft AI agent development, released on GitHub and PyPI. This package provides researchers and developers with a comprehensive toolkit for building and testing AI agents in the Minecraft environment."
 teaser: "/images/minestudio.png"
 links:
   paper: "https://arxiv.org/abs/2412.18293"
@@ -13,10 +13,6 @@ links:
   project: "https://craftjarvis.github.io/MineStudio/"
 tags: ["Minecraft", "Agent", "Reinforcement Learning"]
 ---
-
-## Abstract
-
-MineStudio is a streamlined package for Minecraft AI agent development, released on GitHub and PyPI. This package provides researchers and developers with a comprehensive toolkit for building and testing AI agents in the Minecraft environment.
 
 ## Features
 

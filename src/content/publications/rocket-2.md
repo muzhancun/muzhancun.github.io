@@ -1,10 +1,10 @@
 ---
 title: "ROCKET-2: Steering Visuomotor Policy via Cross-View Goal Alignment"
 authors: ["Shaofei Cai", "Zhancun Mu", "Anji Liu", "Yitao Liang"]
-venue: "arXiv preprint"
-year: 2025
-publishDate: 2025-01-20
-type: preprint
+venue: "AAAI 2026"
+year: 2026
+publishDate: 2026-01-22
+type: conference
 abstract: "We present ROCKET-2, a state-of-the-art Minecraft Agent supporting cross-view goal specification."
 teaser: "/images/ROCKET-2.jpg"
 links:

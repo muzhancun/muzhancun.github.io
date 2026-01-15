@@ -40,7 +40,7 @@ const featuredPublications = featuredPublicationIds
   .filter((pub): pub is NonNullable<typeof pub> => Boolean(pub))
 
 // Featured preprints (specify by filename/id)
-const featuredPreprintIds = ['rocket-3', 'minestudio']
+const featuredPreprintIds = ['deflow', 'rocket-3', 'minestudio']
 const featuredPreprints = featuredPreprintIds
   .map(id => allPreprints.find(preprint => preprint.id === id))
   .filter((preprint): preprint is NonNullable<typeof preprint> => Boolean(preprint))

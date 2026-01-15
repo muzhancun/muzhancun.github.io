@@ -2,6 +2,7 @@ import {
   defineConfig,
   presetWind3,
   presetTypography,
+  presetWebFonts,
   type Rule
 } from 'unocss'
 
@@ -200,7 +201,14 @@ export default defineConfig({
   presets: [
     // presetMini(), // required
     presetWind3(), // original full version
-    presetTypography(typographyConfig)
+    presetTypography(typographyConfig),
+    presetWebFonts({
+      provider: 'none',
+      fonts: {
+        // serif: ['Merriweather', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+        sans: ['Calibri', 'Candara', 'Segoe', 'Segoe UI', 'Optima', 'Arial', 'sans-serif'],
+      }
+    })
   ],
   rules,
   theme: {
