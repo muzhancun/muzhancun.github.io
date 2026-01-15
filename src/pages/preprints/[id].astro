@@ -11,7 +11,7 @@ export async function getStaticPaths() {
   })
   
   return preprints.map((preprint) => ({
-    params: { id: preprint.id },
+    params: { id: preprint.data.slug || preprint.id },
     props: { preprint }
   }))
 }

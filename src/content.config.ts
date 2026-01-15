@@ -77,7 +77,8 @@ const preprints = defineCollection({
         video: z.string().url().optional()
       }).optional(),
       tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
-      draft: z.boolean().default(false)
+      draft: z.boolean().default(false),
+      slug: z.string().optional()
     })
 })
 

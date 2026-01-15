@@ -40,9 +40,9 @@ const featuredPublications = featuredPublicationIds
   .filter((pub): pub is NonNullable<typeof pub> => Boolean(pub))
 
 // Featured preprints (specify by filename/id)
-const featuredPreprintIds = ['deflow', 'rocket-3', 'minestudio']
+const featuredPreprintIds = ['DeFlow', 'rocket-3', 'minestudio']
 const featuredPreprints = featuredPreprintIds
-  .map(id => allPreprints.find(preprint => preprint.id === id))
+  .map(id => allPreprints.find(preprint => preprint.id === id || preprint.id.toLowerCase() === id.toLowerCase()))
   .filter((preprint): preprint is NonNullable<typeof preprint> => Boolean(preprint))
 
 const MAX_POSTS = 5
@@ -107,7 +107,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
         <div class='space-y-4'>
           {featuredPreprints.map((pub) => (
             <a 
-              href={`/preprints/${pub.id}`}
+              href={`/preprints/${pub.data.slug || pub.id}`}
               class="group block"
             >
               <div class="relative rounded-lg border bg-card p-5 transition-all hover:shadow-md">

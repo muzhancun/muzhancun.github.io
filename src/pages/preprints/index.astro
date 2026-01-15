@@ -38,7 +38,7 @@ const uniqueTags = getUniqueTags(preprints)
         <div class="space-y-4">
           {preprints.map((pub) => (
             <a 
-              href={`/preprints/${pub.id}`}
+              href={`/preprints/${pub.data.slug || pub.id}`}
               class="group block"
             >
               <div class="relative rounded-lg border bg-card p-6 transition-all hover:shadow-md">
