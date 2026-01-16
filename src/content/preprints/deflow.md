@@ -12,7 +12,7 @@ links:
   code: "https://github.com/muzhancun/DeFlow"
   project: "https://muzhancun.github.io/preprints/DeFlow"
 tags: ["Offline RL", "Reinforcement Learning"]
-slug: DeFlow
+slug: deflow
 ---
 
 ## Introduction
