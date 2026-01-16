@@ -8,7 +8,7 @@ type: preprint
 abstract: "We present DeFlow, a decoupled offline RL framework that leverages flow matching to faithfully capture complex behavior manifolds. Optimizing generative policies is computationally prohibitive, typically necessitating backpropagation through ODE solvers. We address this by learning a lightweight refinement module within an explicit, data-derived trust region of the flow manifold, rather than sacrificing the iterative generation capability via single-step distillation. This way, we bypass solver differentiation and eliminate the need for balancing loss terms, ensuring stable improvement while fully preserving the flow’s iterative expressivity. Empirically, DeFlow achieves superior performance on the challenging OGBench benchmark and demonstrates efficient offline-to-online adaptation."
 teaser: "/images/deflow.png"
 links:
-  paper: "https://arxiv.org/abs/2412.18293"
+  paper: "http://arxiv.org/abs/2601.10471"
   code: "https://github.com/muzhancun/DeFlow"
   project: "https://muzhancun.github.io/preprints/DeFlow"
 tags: ["Offline RL", "Reinforcement Learning"]
