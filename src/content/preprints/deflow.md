@@ -61,7 +61,7 @@ Empirically, we set $\delta$ proportional to the estimated deviation (e.g., $\de
 ![O2O](/images/research/deflow/o2o.png)
 
 For offline-to-online tasks, DeFlow matches or exceeds the state-of-the-art (e.g., FQL), achieving remarkable gains in complex tasks like _humanoidmaze-medium_.
-A critical advantage of DeFlow is its **seamless transition** from offline to online. Unlike prior worksthat often necessitate altering hyperparameters (or ``loosening'' constraints) to encourage exploration, DeFlow requires **zero additional tuning**. We maintain the exact offline configuration, relying on our automatic $\alpha$ tuning to naturally balance exploration. While this strict adherence to a unified protocol may limit performance in tasks with poor data quality (e.g., _relocate-cloned_), it ensures empirical rigor and demonstrates the method's inherent robustness without task-specific engineering.
+A critical advantage of DeFlow is its **seamless transition** from offline to online. Unlike prior works that often necessitate altering hyperparameters (or ``loosening'' constraints) to encourage exploration, DeFlow requires **zero additional tuning**. We maintain the exact offline configuration, relying on our automatic $\alpha$ tuning to naturally balance exploration. While this strict adherence to a unified protocol may limit performance in tasks with poor data quality (e.g., _relocate-cloned_), it ensures empirical rigor and demonstrates the method's inherent robustness without task-specific engineering.
 
 ## Discussions: What's Next?
 
