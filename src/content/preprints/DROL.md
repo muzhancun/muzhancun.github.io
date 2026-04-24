@@ -1,6 +1,6 @@
 ---
 title: "Preserve Support, Not Correspondence: Dynamic Routing for Offline Reinforcement Learning"
-authors: ["Zhancun Mu", "Guangyu Zhao", "Yiwu Zhong", "Chi Zhang"]
+authors: ["Zhancun Mu", "Guangyu Zhao", "Yiwu Zhong", "Chi Zhang†"]
 venue: "Preprint"
 year: 2026
 publishDate: 2026-04-24

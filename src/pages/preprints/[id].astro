@@ -22,6 +22,8 @@ type Props = {
 
 const { preprint } = Astro.props
 const { Content, headings } = await render(preprint)
+const hasEqualContribution = preprint.data.authors.some((author) => author.includes('*'))
+const hasCorrespondingAuthor = preprint.data.authors.some((author) => author.includes('†'))
 
 const meta = {
   description: preprint.data.abstract,
@@ -41,18 +43,25 @@ const meta = {
       <div class='mb-4 flex flex-wrap justify-center gap-x-1 text-lg leading-relaxed'>
         {preprint.data.authors.map((author, i) => {
            const isLast = i === preprint.data.authors.length - 1
-           const cleanAuthor = author.replace('*', '')
+           const cleanAuthor = author.replace(/[*†]/g, '')
            const isMe = cleanAuthor === 'Zhancun Mu'
            return (
              <>
                <span class={isMe ? 'font-medium text-foreground underline decoration-border/50 underline-offset-4' : 'text-muted-foreground'}>
-                 {cleanAuthor}{author.includes('*') && '*'}
+                 {cleanAuthor}{author.includes('*') && '*'}{author.includes('†') && '†'}
                </span>
                {!isLast && <span class="text-muted-foreground mr-3">,</span>}
              </>
            )
         })}
       </div>
+
+      {(hasEqualContribution || hasCorrespondingAuthor) && (
+        <div class='mb-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-muted-foreground'>
+          {hasEqualContribution && <span>* Equal contribution</span>}
+          {hasCorrespondingAuthor && <span>† Corresponding author</span>}
+        </div>
+      )}
 
       <div class='mb-6 flex flex-col items-center gap-2 text-base text-muted-foreground sm:flex-row sm:justify-center'>
         <span class='font-medium italic text-foreground'>{preprint.data.venue || 'Preprint'}</span>

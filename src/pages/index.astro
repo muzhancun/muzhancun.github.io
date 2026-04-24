@@ -133,11 +133,12 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
                     <p class="text-xs text-muted-foreground leading-relaxed">
                       {pub.data.authors.map((author, index) => {
                         const isEqualContrib = author.includes('*');
-                        const cleanAuthor = author.replace('*', '');
+                        const isCorrespondingAuthor = author.includes('†');
+                        const cleanAuthor = author.replace(/[*†]/g, '');
                         const isMe = cleanAuthor === 'Zhancun Mu';
                         return (
                           <span class={isMe ? 'font-medium text-foreground' : ''}>
-                            {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
+                            {cleanAuthor}{isEqualContrib ? '*' : ''}{isCorrespondingAuthor ? '†' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
                           </span>
                         );
                       })}
@@ -235,11 +236,12 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
                     <p class="text-xs text-muted-foreground leading-relaxed">
                       {pub.data.authors.map((author, index) => {
                         const isEqualContrib = author.includes('*');
-                        const cleanAuthor = author.replace('*', '');
+                        const isCorrespondingAuthor = author.includes('†');
+                        const cleanAuthor = author.replace(/[*†]/g, '');
                         const isMe = cleanAuthor === 'Zhancun Mu';
                         return (
                           <span class={isMe ? 'font-medium text-foreground' : ''}>
-                            {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
+                            {cleanAuthor}{isEqualContrib ? '*' : ''}{isCorrespondingAuthor ? '†' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
                           </span>
                         );
                       })}
