@@ -9,6 +9,7 @@ abstract: >-
   One-step offline RL actors are attractive because they avoid backpropagating through long iterative samplers and keep inference cheap, but they still have to improve under a critic without drifting away from actions that the dataset can support. We propose DROL, a latent-conditioned one-step actor trained with top-1 dynamic routing. For each state, the actor samples K candidate actions from a bounded latent prior, assigns each dataset action to its nearest candidate, and updates only that winner with behavior cloning and critic guidance. Because the routing is recomputed from the current candidate geometry, ownership of a supported region can shift across candidates over the course of learning. On OGBench and D4RL, DROL is competitive with the one-step FQL baseline, improving many OGBench task groups while remaining strong on both AntMaze and Adroit.
 teaser: "/images/drol.png"
 links:
+  paper: "https://arxiv.org/pdf/2604.22229"
   code: "https://github.com/muzhancun/DROL"
   project: "https://muzhancun.github.io/DROL"
 tags: ["Offline RL", "Reinforcement Learning"]
