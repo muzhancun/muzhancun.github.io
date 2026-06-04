@@ -64,21 +64,23 @@ const uniqueTags = getUniqueTags(publications)
                   </h3>
                   
                   <!-- Authors -->
-                  <p class="text-xs text-muted-foreground leading-relaxed">
-                    {pub.data.authors.map((author, index) => {
-                      const isEqualContrib = author.includes('*');
-                      const cleanAuthor = author.replace('*', '');
-                      const isMe = cleanAuthor === 'Zhancun Mu';
-                      return (
-                        <span class={isMe ? 'font-medium text-foreground' : ''}>
-                          {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
-                        </span>
-                      );
-                    })}
+                  <div class="space-y-1">
+                    <p class="text-xs text-muted-foreground leading-relaxed">
+                      {pub.data.authors.map((author, index) => {
+                        const isEqualContrib = author.includes('*');
+                        const cleanAuthor = author.replace('*', '');
+                        const isMe = cleanAuthor === 'Zhancun Mu';
+                        return (
+                          <span class={isMe ? 'font-medium text-foreground' : ''}>
+                            {cleanAuthor}{isEqualContrib ? '*' : ''}{index < pub.data.authors.length - 1 ? ', ' : ''}
+                          </span>
+                        );
+                      })}
+                    </p>
                     {pub.data.authors.some(author => author.includes('*')) && (
-                      <span class="inline-block text-xs text-amber-700 bg-amber-50/70 px-2 py-0.5 rounded-md mt-2 italic font-light border border-amber-100 equal-contribution">* Equal contribution</span>
+                      <p class="text-[11px] leading-none text-muted-foreground/70 italic">* Equal contribution</p>
                     )}
-                  </p>
+                  </div>
                   
                   <!-- Venue with Publication Type Badge -->
                   <div class="flex items-center gap-2">
@@ -210,12 +212,6 @@ const uniqueTags = getUniqueTags(publications)
     overflow: hidden;
   }
 
-  /* Equal contribution styling for dark mode */
-  .dark .equal-contribution {
-    background-color: rgb(67 56 202 / 0.1) !important;
-    color: rgb(129 140 248) !important;
-    border-color: rgb(67 56 202 / 0.3) !important;
-  }
 </style>
 
 <script>

@@ -1,15 +1,18 @@
 ---
 import links from 'public/links.json'
+import linkPapers from 'public/link-papers.json'
 import config from 'virtual:config'
 
 import { Comment } from 'astro-pure/advanced'
 import { Collapse, Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import FriendList from '@/components/links/FriendList.astro'
+import RandomPaperList from '@/components/links/RandomPaperList.astro'
 import Signature from '@/components/pages/Signature.astro'
 
 const headings = [
   { depth: 2, slug: 'common-links', text: 'Common Links' },
+  { depth: 2, slug: 'random-papers', text: 'Random Papers' },
   { depth: 2, slug: 'special-links', text: 'Special Links' },
   { depth: 2, slug: 'apply-links', text: 'Apply Links' },
 ]
@@ -24,6 +27,7 @@ const linksConf = config.integ.links
   </p>
   <h2 id='common-links'>Common Links</h2>
   <FriendList list={friends[0]} />
+  <RandomPaperList people={linkPapers.people} />
   <Collapse title='Links with Bad Status'>
     <FriendList list={friends[1]} />
   </Collapse>

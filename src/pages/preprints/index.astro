@@ -74,9 +74,6 @@ const uniqueTags = getUniqueTags(preprints)
                         </span>
                       );
                     })}
-                    {/* {pub.data.authors.some(author => author.includes('*')) && (
-                      <span class="inline-block text-xs text-amber-700 bg-amber-50/70 px-2 py-0.5 rounded-md mt-1 italic font-light border border-amber-100 equal-contribution">* Equal contribution</span>
-                    )} */}
                   </p>
                   
                   <!-- Venue -->
@@ -200,12 +197,6 @@ const uniqueTags = getUniqueTags(preprints)
     overflow: hidden;
   }
 
-  /* Equal contribution styling for dark mode */
-  .dark .equal-contribution {
-    background-color: rgb(67 56 202 / 0.1) !important;
-    color: rgb(129 140 248) !important;
-    border-color: rgb(67 56 202 / 0.3) !important;
-  }
 </style>
 
 <script>

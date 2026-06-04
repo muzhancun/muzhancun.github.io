@@ -1,0 +1,144 @@
+{
+  "people": [
+    {
+      "name": "Shaofei Cai",
+      "scholar": "https://scholar.google.com/citations?user=MZXDSSUAAAAJ",
+      "papers": [
+        {
+          "title": "Scalable Multi-Task Reinforcement Learning for Generalizable Spatial Intelligence in Visuomotor Agents",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2507.23698"
+        },
+        {
+          "title": "ROCKET-2: Steering Visuomotor Policy via Cross-View Goal Alignment",
+          "venue": "AAAI 2026",
+          "url": "https://arxiv.org/abs/2503.02505"
+        },
+        {
+          "title": "ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting",
+          "venue": "CVPR 2025",
+          "url": "https://arxiv.org/abs/2410.17856"
+        },
+        {
+          "title": "GROOT: Learning to Follow Instructions by Watching Gameplay Videos",
+          "venue": "ICLR 2024 Spotlight",
+          "url": "https://arxiv.org/abs/2310.08235"
+        },
+        {
+          "title": "Automatic Relation-aware Graph Network Proliferation",
+          "venue": "CVPR 2022 Oral",
+          "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Cai_Automatic_Relation-Aware_Graph_Network_Proliferation_CVPR_2022_paper.html"
+        }
+      ]
+    },
+    {
+      "name": "Zihao Wang",
+      "scholar": "https://scholar.google.com/citations?user=I0D-EgQAAAAJ",
+      "papers": [
+        {
+          "title": "Game-TARS: Pretrained Foundation Models for Scalable Generalist Multimodal Game Agents",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2510.23691"
+        },
+        {
+          "title": "UI-TARS-2 Technical Report: Advancing GUI Agent with Multi-Turn Reinforcement Learning",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2509.02544"
+        },
+        {
+          "title": "UI-TARS-1.5",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2501.12326"
+        },
+        {
+          "title": "OmniJARVIS: Unified Vision-Language-Action Tokenization Enables Open-World Instruction Following Agents",
+          "venue": "NeurIPS 2024",
+          "url": "https://arxiv.org/abs/2407.00114"
+        },
+        {
+          "title": "JARVIS-1: Open-World Multi-task Agents with Memory-Augmented Multimodal Language Models",
+          "venue": "TPAMI 2024",
+          "url": "https://arxiv.org/abs/2311.05997"
+        },
+        {
+          "title": "Describe, Explain, Plan and Select: Interactive Planning with Large Language Models Enables Open-World Multi-Task Agents",
+          "venue": "NeurIPS 2023",
+          "url": "https://arxiv.org/abs/2302.01560"
+        }
+      ]
+    },
+    {
+      "name": "Haowei Lin",
+      "scholar": "https://scholar.google.com/citations?user=Ng-DmJgAAAAJ&hl=zh-CN",
+      "papers": [
+        {
+          "title": "UniCode: Augmenting Evaluation for Code Reasoning",
+          "venue": "ICML 2026",
+          "url": "https://arxiv.org/abs/2510.17868"
+        },
+        {
+          "title": "Can Language Models Discover Scaling Laws?",
+          "venue": "ICLR 2026",
+          "url": "https://arxiv.org/abs/2507.21184"
+        },
+        {
+          "title": "A Neural Symbolic Model for Space Physics",
+          "venue": "Nature Machine Intelligence 2025",
+          "url": "https://www.nature.com/articles/s42256-025-01126-3"
+        },
+        {
+          "title": "MCU: An Evaluation Framework for Open-Ended Game Agents",
+          "venue": "ICML 2025 Spotlight",
+          "url": "https://arxiv.org/abs/2310.08367"
+        },
+        {
+          "title": "TFG-Flow: Training-free Guidance in Multimodal Generative Flow",
+          "venue": "ICLR 2025",
+          "url": "https://arxiv.org/abs/2501.14216"
+        },
+        {
+          "title": "TFG: Unified Training-Free Guidance for Diffusion Models",
+          "venue": "NeurIPS 2024 Spotlight",
+          "url": "https://arxiv.org/abs/2409.15761"
+        },
+        {
+          "title": "Selecting Large Language Model to Fine-tune via Rectified Scaling Law",
+          "venue": "ICML 2024",
+          "url": "https://arxiv.org/abs/2402.02314"
+        }
+      ]
+    },
+    {
+      "name": "Kewei Lian",
+      "scholar": "https://scholar.google.com/citations?user=ziHLMt4AAAAJ",
+      "papers": [
+        {
+          "title": "Toward Memory-Aided World Models: Benchmarking via Spatial Consistency",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2505.22976"
+        },
+        {
+          "title": "Optimizing Latent Goal by Learning from Trajectory Preference",
+          "venue": "ICML 2026",
+          "url": "https://arxiv.org/abs/2412.02125"
+        },
+        {
+          "title": "ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting",
+          "venue": "CVPR 2025",
+          "url": "https://arxiv.org/abs/2410.17856"
+        }
+      ]
+    },
+    {
+      "name": "Muyao Li",
+      "scholar": "https://scholar.google.com/citations?user=QDWK5-YAAAAJ",
+      "papers": [
+        {
+          "title": "JARVIS-VLA: Post-Training Large-Scale Vision Language Models to Play Visual Games with Keyboards and Mouse",
+          "venue": "ACL 2025",
+          "url": "https://craftjarvis.github.io/JarvisVLA/"
+        }
+      ]
+    }
+  ]
+}

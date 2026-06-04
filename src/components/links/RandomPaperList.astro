@@ -1,0 +1,104 @@
+---
+interface Paper {
+  title: string
+  venue: string
+  url: string
+}
+
+interface Person {
+  name: string
+  scholar: string
+  papers: Paper[]
+}
+
+interface DisplayPaper extends Paper {
+  person: string
+  scholar: string
+}
+
+interface Props {
+  people: Person[]
+}
+
+const { people } = Astro.props
+const paperPool: DisplayPaper[] = people.flatMap((person) =>
+  person.papers.map((paper) => ({
+    ...paper,
+    person: person.name,
+    scholar: person.scholar
+  }))
+)
+---
+
+<section class='not-prose my-8' aria-labelledby='random-papers'>
+  <div class='mb-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
+    <div>
+      <h2 id='random-papers' class='mb-2'>Random Papers</h2>
+      <p class='my-0 text-sm text-muted-foreground'>
+        Five picks from collaborators with confirmed Google Scholar profiles.
+      </p>
+    </div>
+    <button
+      id='shuffle-random-papers'
+      type='button'
+      class='inline-flex w-fit items-center rounded-lg border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-primary-foreground'
+    >
+      Shuffle
+    </button>
+  </div>
+
+  <div id='random-paper-list' class='grid gap-3 sm:grid-cols-2'></div>
+</section>
+
+<script define:vars={{ paperPool }}>
+  const paperList = document.getElementById('random-paper-list')
+  const shuffleButton = document.getElementById('shuffle-random-papers')
+
+  function samplePapers(items, count) {
+    const shuffled = [...items]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled.slice(0, count)
+  }
+
+  function appendText(element, text) {
+    element.appendChild(document.createTextNode(text))
+  }
+
+  function renderPapers() {
+    if (!paperList) return
+
+    paperList.replaceChildren()
+    samplePapers(paperPool, 5).forEach((paper) => {
+      const card = document.createElement('article')
+      card.className =
+        'flex h-full flex-col gap-2 rounded-lg border bg-background p-3 transition-colors hover:bg-muted/50'
+
+      const title = document.createElement('a')
+      title.className = 'no-underline text-sm font-medium leading-snug text-foreground hover:text-primary'
+      title.href = paper.url
+      title.target = '_blank'
+      title.rel = 'noopener noreferrer'
+      appendText(title, paper.title)
+
+      const meta = document.createElement('p')
+      meta.className = 'my-0 text-xs text-muted-foreground'
+      appendText(meta, `${paper.person} · ${paper.venue}`)
+
+      const scholar = document.createElement('a')
+      scholar.className = 'w-fit no-underline text-xs text-primary hover:underline'
+      scholar.href = paper.scholar
+      scholar.target = '_blank'
+      scholar.rel = 'noopener noreferrer'
+      appendText(scholar, 'Google Scholar')
+
+      card.append(title, meta, scholar)
+      paperList.appendChild(card)
+    })
+  }
+
+  renderPapers()
+  shuffleButton?.addEventListener('click', renderPapers)
+</script>
