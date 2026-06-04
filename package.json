@@ -8,6 +8,8 @@
     "build": "astro-pure check && astro check && astro build",
     "preview": "astro preview",
     "sync": "astro sync",
+    "papers:sync": "python3 scripts/update_link_papers.py",
+    "papers:deps": "python3 -m pip install -r scripts/requirements-scholar.txt",
     "check": "astro check",
     "astro": "astro",
     "pure": "astro-pure",

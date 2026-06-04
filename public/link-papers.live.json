@@ -1,6 +1,7 @@
 {
   "generatedAt": "2026-06-04T07:02:00.311192+00:00",
   "source": "scholarly",
+  "fallback": "public/link-papers.json",
   "people": [
     {
       "name": "Shaofei Cai",

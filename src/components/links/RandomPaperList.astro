@@ -35,7 +35,7 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
     <div>
       <h2 id='random-papers' class='mb-2'>Random Papers</h2>
       <p class='my-0 text-sm text-muted-foreground'>
-        Five picks from collaborators with confirmed Google Scholar profiles.
+        Five picks from a Scholar-synced pool, with a local fallback.
       </p>
     </div>
     <button
@@ -50,9 +50,37 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
   <div id='random-paper-list' class='grid gap-3 sm:grid-cols-2'></div>
 </section>
 
-<script define:vars={{ paperPool }}>
+<script define:vars={{ fallbackPaperPool: paperPool, livePapersPath: '/link-papers.live.json' }}>
   const paperList = document.getElementById('random-paper-list')
   const shuffleButton = document.getElementById('shuffle-random-papers')
+  let activePaperPool = Array.isArray(fallbackPaperPool) ? fallbackPaperPool : []
+  let activePaperSource = 'fallback'
+
+  function isPaper(item) {
+    return (
+      item &&
+      typeof item.title === 'string' &&
+      typeof item.venue === 'string' &&
+      typeof item.url === 'string' &&
+      item.title &&
+      item.venue &&
+      item.url
+    )
+  }
+
+  function normalizePaperPool(data) {
+    if (!data || !Array.isArray(data.people)) return []
+
+    return data.people.flatMap((person) => {
+      if (!person || !Array.isArray(person.papers)) return []
+
+      return person.papers.filter(isPaper).map((paper) => ({
+        ...paper,
+        person: typeof person.name === 'string' ? person.name : 'Google Scholar',
+        scholar: typeof person.scholar === 'string' ? person.scholar : '#'
+      }))
+    })
+  }
 
   function samplePapers(items, count) {
     const shuffled = [...items]
@@ -71,7 +99,9 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
     if (!paperList) return
 
     paperList.replaceChildren()
-    samplePapers(paperPool, 5).forEach((paper) => {
+    paperList.dataset.paperSource = activePaperSource
+    paperList.dataset.paperCount = String(activePaperPool.length)
+    samplePapers(activePaperPool, 5).forEach((paper) => {
       const card = document.createElement('article')
       card.className =
         'flex h-full flex-col gap-2 rounded-lg border bg-background p-3 transition-colors hover:bg-muted/50'
@@ -99,6 +129,24 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
     })
   }
 
+  async function loadLivePapers() {
+    try {
+      const response = await fetch(livePapersPath, { cache: 'no-store' })
+      if (!response.ok) return
+
+      const livePaperPool = normalizePaperPool(await response.json())
+      if (livePaperPool.length === 0) return
+
+      activePaperPool = livePaperPool
+      activePaperSource = 'live'
+      renderPapers()
+    } catch {
+      activePaperPool = fallbackPaperPool
+      activePaperSource = 'fallback'
+    }
+  }
+
   renderPapers()
+  loadLivePapers()
   shuffleButton?.addEventListener('click', renderPapers)
 </script>
