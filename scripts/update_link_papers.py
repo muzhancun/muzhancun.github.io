@@ -16,6 +16,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote_plus
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +26,7 @@ SCHOLAR_CITATION_URL = (
     "https://scholar.google.com/citations?"
     "view_op=view_citation&hl=en&user={scholar_id}&citation_for_view={citation_id}"
 )
+PAPER_SEARCH_URL = "https://www.semanticscholar.org/search?q={query}&sort=relevance"
 
 
 def parse_args() -> argparse.Namespace:
@@ -128,6 +130,18 @@ def scholar_citation_url(scholar_id: str, publication: dict[str, Any]) -> str:
     return f"https://scholar.google.com/citations?user={scholar_id}"
 
 
+def paper_search_url(publication: dict[str, Any]) -> str | None:
+    bib = publication.get("bib")
+    if not isinstance(bib, dict):
+        return None
+
+    title = bib.get("title")
+    if not title:
+        return None
+
+    return PAPER_SEARCH_URL.format(query=quote_plus(str(title)))
+
+
 def clean_citation(citation: str) -> str:
     citation = citation.replace("\u2026", "").replace("...", "")
     citation = re.sub(r"\s+", " ", citation).strip(" ,")
@@ -164,7 +178,7 @@ def paper_url(
         if url:
             return str(url)
 
-    return scholar_citation_url(scholar_id, publication)
+    return paper_search_url(publication) or scholar_citation_url(scholar_id, publication)
 
 
 def publication_to_paper(

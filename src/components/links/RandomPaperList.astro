@@ -56,6 +56,14 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
   let activePaperPool = Array.isArray(fallbackPaperPool) ? fallbackPaperPool : []
   let activePaperSource = 'fallback'
 
+  function isScholarUrl(url) {
+    try {
+      return new URL(url).hostname === 'scholar.google.com'
+    } catch {
+      return false
+    }
+  }
+
   function isPaper(item) {
     return (
       item &&
@@ -101,7 +109,10 @@ const paperPool: DisplayPaper[] = people.flatMap((person) =>
     paperList.replaceChildren()
     paperList.dataset.paperSource = activePaperSource
     paperList.dataset.paperCount = String(activePaperPool.length)
-    samplePapers(activePaperPool, 5).forEach((paper) => {
+    const directPaperPool = activePaperPool.filter((paper) => !isScholarUrl(paper.url))
+    const renderPool = directPaperPool.length >= 5 ? directPaperPool : activePaperPool
+    paperList.dataset.directPaperCount = String(directPaperPool.length)
+    samplePapers(renderPool, 5).forEach((paper) => {
       const card = document.createElement('article')
       card.className =
         'flex h-full flex-col gap-2 rounded-lg border bg-background p-3 transition-colors hover:bg-muted/50'

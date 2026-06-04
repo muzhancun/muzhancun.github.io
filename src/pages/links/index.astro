@@ -3,7 +3,6 @@ import links from 'public/links.json'
 import linkPapers from 'public/link-papers.json'
 import config from 'virtual:config'
 
-import { Comment } from 'astro-pure/advanced'
 import { Collapse, Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import FriendList from '@/components/links/FriendList.astro'
@@ -37,5 +36,4 @@ const linksConf = config.integ.links
   <FriendList list={friends[2]} />
 
   {config.signature && <Signature />}
-  <Comment slot='bottom' />
 </PageLayout>
